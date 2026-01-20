@@ -1,3 +1,3 @@
-# acg--nix-hop--poetry-pyside6
+# acg--nix-hop--python--poetry-pyside6
 
 ramblehead's Higher Order Project (HOP) for acg-templates
