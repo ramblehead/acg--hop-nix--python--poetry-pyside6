@@ -23,7 +23,7 @@ template_str = """\
 
 
 def generate(ctx: Context) -> str:
-    project_name = ctx.project_config.autocodegen.project_name
+    project_name = ctx.template_config.project_name
 
     return Template(template_str).substitute(
         {
