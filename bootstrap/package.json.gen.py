@@ -10,8 +10,8 @@ if TYPE_CHECKING:
 
 template_str = """\
 {
-  "name": "${project_name_kebab}",
-  "packageManager": "yarn@4.11.0",
+  "name": "pyside-test-flat-hop",
+  "packageManager": "yarn@4.12.0",
   "devDependencies": {
     "prettier": "^3.6.2",
     "prettier-plugin-pkg": "^0.21.2",
