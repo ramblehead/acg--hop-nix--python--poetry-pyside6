@@ -21,56 +21,56 @@ template_str = r"""\
 (require 'lsp-rust)
 (require 'vterm)
 
-(define-minor-mode acg-templates-mode
-  "acg-templates project-specific minor mode."
-  :lighter " acg-templates")
+(define-minor-mode ${project_name_kebab}-mode
+  "${project_name_kebab} project-specific minor mode."
+  :lighter " ${project_name_kebab}")
 
-(add-to-list 'rm-blacklist " acg-templates")
+(add-to-list 'rm-blacklist " ${project_name_kebab}")
 
-(defun acg-templates/lsp-javascript-deps-providers-path (relative-path)
+(defun ${project_name_kebab}/lsp-javascript-deps-providers-path (relative-path)
   (let ((path-hop
          (expand-file-name
           (file-name-concat (rh-project-get-root)
                             "node_modules/.bin" relative-path))))
     path-hop))
 
-(defun acg-templates/lsp-javascript-setup ()
+(defun ${project_name_kebab}/lsp-javascript-setup ()
   ;; (setq-local lsp-deps-providers (copy-tree lsp-deps-providers))
 
   (plist-put
    lsp-deps-providers
-   :acg-templates/local-npm
-   (list :path #'acg-templates/lsp-javascript-deps-providers-path))
+   :${project_name_kebab}/local-npm
+   (list :path #'${project_name_kebab}/lsp-javascript-deps-providers-path))
 
   (lsp--require-packages)
 
   (lsp-dependency 'typescript-language-server
-                  '(:acg-templates/local-npm
+                  '(:${project_name_kebab}/local-npm
                     "typescript-language-server"))
 
   (lsp-dependency 'tailwindcss-language-server
-                  '(:acg-templates/local-npm
+                  '(:${project_name_kebab}/local-npm
                     "tailwindcss-language-server"))
 
   (lsp-dependency 'typescript
-                  '(:acg-templates/local-npm "tsserver"))
+                  '(:${project_name_kebab}/local-npm "tsserver"))
 
   (add-hook
    'lsp-after-initialize-hook
-   #'acg-templates/flycheck-add-eslint-next-to-lsp))
+   #'${project_name_kebab}/flycheck-add-eslint-next-to-lsp))
 
-(defun acg-templates/flycheck-after-syntax-check-hook-once ()
+(defun ${project_name_kebab}/flycheck-after-syntax-check-hook-once ()
   (remove-hook
    'flycheck-after-syntax-check-hook
-   #'acg-templates/flycheck-after-syntax-check-hook-once
+   #'${project_name_kebab}/flycheck-after-syntax-check-hook-once
    t)
   (flycheck-buffer))
 
-(defun acg-templates/flycheck-add-eslint-next-to-lsp ()
+(defun ${project_name_kebab}/flycheck-add-eslint-next-to-lsp ()
   (when (seq-contains-p '(js2-mode typescript-mode web-mode) major-mode)
     (flycheck-add-next-checker 'lsp 'javascript-eslint)))
 
-(defun acg-templates/lsp-python-deps-providers-path (relative-path)
+(defun ${project_name_kebab}/lsp-python-deps-providers-path (relative-path)
   (let ((venv-bin-path-outer
          (expand-file-name
           (file-name-concat (rh-project-get-root)
@@ -83,28 +83,28 @@ template_str = r"""\
         venv-bin-path-outer
       venv-bin-path-inner)))
 
-(defun acg-templates/lsp-python-setup ()
+(defun ${project_name_kebab}/lsp-python-setup ()
   (plist-put
    lsp-deps-providers
-   :acg-templates/local-venv
-   (list :path #'acg-templates/lsp-python-deps-providers-path))
+   :${project_name_kebab}/local-venv
+   (list :path #'${project_name_kebab}/lsp-python-deps-providers-path))
 
   (lsp-dependency 'pyright
-                  '(:acg-templates/local-venv
+                  '(:${project_name_kebab}/local-venv
                     "basedpyright-langserver")))
 
 (eval-after-load 'lsp-javascript
-  #'acg-templates/lsp-javascript-setup)
+  #'${project_name_kebab}/lsp-javascript-setup)
 
 (eval-after-load 'lsp-pyright
-  #'acg-templates/lsp-python-setup)
+  #'${project_name_kebab}/lsp-python-setup)
 
-(defun acg-templates-setup ()
+(defun ${project_name_kebab}-setup ()
   (when buffer-file-name
     (let ((hop-outer (expand-file-name (rh-project-get-root)))
           venv-bin-path venv-path project-root)
       (when hop-outer
-        (setq venv-bin-path (acg-templates/lsp-python-deps-providers-path ""))
+        (setq venv-bin-path (${project_name_kebab}/lsp-python-deps-providers-path ""))
         (setq venv-path (directory-file-name (file-name-directory venv-bin-path)))
         (setq project-root (directory-file-name (file-name-directory venv-path)))
 

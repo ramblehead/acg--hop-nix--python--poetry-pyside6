@@ -11,8 +11,8 @@ if TYPE_CHECKING:
 template_str = r"""\
 ;; -*- coding: utf-8 -*-
 
-(acg-templates-mode 1)
-(acg-templates-setup)
+(${project_name_kebab}-mode 1)
+(${project_name_kebab}-setup)
 """
 
 
